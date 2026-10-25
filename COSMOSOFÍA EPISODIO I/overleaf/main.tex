@@ -1,0 +1,344 @@
+% =====================================================================
+%  COSMOSOFÍA · Episodio I
+%  Guion de radio · Radioacción Cósmica · Asociación Supernova
+%  Confeccionado por Daniel Martín Guerrero
+%  Compilar con pdfLaTeX (Overleaf compila dos veces automáticamente,
+%  necesario para la portada).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands,es-nolayout]{babel}
+\usepackage{newpxtext}             % Palatino, con versalitas reales
+\usepackage{newpxmath}
+\usepackage[letterspace=110]{microtype}
+\usepackage[a4paper,top=26mm,bottom=24mm,left=22mm,right=22mm,headsep=8mm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Paleta ----------
+\definecolor{navy}{HTML}{1B2F4E}
+\definecolor{azul}{HTML}{3A64A0}
+\definecolor{cielo}{HTML}{B7C9E2}
+\definecolor{bruma}{HTML}{EEF3F9}
+\definecolor{gris}{HTML}{6B7480}
+\definecolor{tinta}{HTML}{1F2328}
+\definecolor{estrella}{HTML}{C8A45A}
+\definecolor{tierra}{HTML}{5B8FD0}
+
+\color{tinta}
+\raggedbottom
+\setlength{\parindent}{0pt}
+\linespread{1.08}
+
+\newcommand{\vsc}[1]{\textls[120]{\textsc{#1}}}
+
+% ---------- Cabeceras ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\footnotesize\color{gris}\vsc{Cosmosofía · Episodio I}}
+\fancyhead[R]{\footnotesize\color{gris}\vsc{Radioacción Cósmica · Supernova}}
+\fancyfoot[C]{\small\color{azul}$\star$\enspace\thepage\enspace$\star$}
+
+% ---------- Secciones ----------
+% \seccion{número}{título}{subtítulo}
+\newcommand{\seccion}[3]{%
+  \par\addvspace{7mm}%
+  \begin{minipage}{\linewidth}
+    {\color{azul}\Large #1}\hspace{3.5mm}{\color{navy}\Large\vsc{#2}}\\[0.6mm]
+    {\itshape\color{gris}#3}\\[-1.2mm]
+    \begin{tikzpicture}
+      \draw[cielo,line width=.5pt] (0,0) -- (\linewidth-1.6mm,0);
+      \draw[azul,fill=white,line width=.5pt] (\linewidth-1.6mm,0) circle (1.5mm);
+    \end{tikzpicture}
+  \end{minipage}\par\nopagebreak\vspace{3mm}}
+
+% ---------- Líneas de locución ----------
+\newcommand{\linea}[2]{%
+  \par\vspace{1.5mm}\noindent\hangindent=13mm\hangafter=1
+  \makebox[13mm][l]{\color{azul}\small\bfseries\textls[60]{#1}}#2\par}
+\newcommand{\Lu}[1]{\linea{L1}{#1}}
+\newcommand{\Ld}[1]{\linea{L2}{#1}}
+\newcommand{\Ambos}[1]{%
+  \par\vspace{1.5mm}\noindent\hangindent=13mm\hangafter=1
+  \makebox[13mm][l]{\color{azul}\scriptsize\bfseries L1 y L2}#1\par}
+
+% ---------- Indicaciones técnicas (no se leen) ----------
+\newcommand{\cue}[1]{%
+  \par\vspace{2.5mm}\noindent\hspace*{13mm}{\color{cielo}\rule[.6ex]{6mm}{.5pt}}\hspace{2.5mm}%
+  {\small\color{gris}\vsc{#1}}\par\vspace{2mm}}
+
+% ---------- Citas ("ecos") ----------
+% \eco{número}{autor}{cita}{fuente}
+\newtcolorbox{ecobox}{enhanced,breakable=false,colback=bruma,colframe=bruma,
+  boxrule=0pt,arc=0pt,left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,
+  borderline west={2pt}{0pt}{azul},enlarge left by=13mm,width=\linewidth-13mm,
+  before skip=3mm,after skip=3mm}
+\newcommand{\eco}[4]{%
+  \begin{ecobox}
+    {\small\color{azul}\textbf{Eco #1}}\ {\small\color{gris}(#2)}\\[0.8mm]
+    {\itshape\color{navy}#3}\par\vspace{1mm}
+    \hfill{\footnotesize\color{gris}#4}
+  \end{ecobox}}
+
+% ---------- Separador en forma de constelación ----------
+\newcommand{\constelacion}{%
+  \par\vspace{4mm}\begin{center}\begin{tikzpicture}[x=1mm,y=1mm]
+    \draw[cielo,line width=.4pt] (0,2)--(9,5)--(18,3)--(27,6)--(36,3);
+    \foreach \x/\y/\r in {0/2/.8,9/5/1.1,18/3/.7,27/6/1.2,36/3/.8}
+      \fill[azul] (\x,\y) circle (\r*0.45);
+  \end{tikzpicture}\end{center}\vspace{-1mm}}
+
+% =====================================================================
+\begin{document}
+
+% =========================== PORTADA ================================
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm]
+  \coordinate (O) at (current page.north west);
+  % cabecera
+  \node[anchor=south west,inner sep=0] at ($(O)+(22,-27)$)
+    {\color{navy}\textls[250]{\textbf{SUPERNOVA}}\ {\footnotesize\color{gris}· \vsc{Asociación Astronómica}}};
+  \node[anchor=south east,inner sep=0] at ($(O)+(188,-27)$)
+    {\footnotesize\color{gris}\vsc{Radio Universidad de Salamanca}};
+  \draw[gris!70,line width=.4pt] ($(O)+(22,-29)$) -- ($(O)+(188,-29)$);
+
+  % campo de estrellas (pseudoaleatorio, reproducible)
+  \pgfmathsetseed{7}
+  \foreach \i in {1,...,230}{
+    \pgfmathsetmacro{\sx}{rnd*210}
+    \pgfmathsetmacro{\sy}{32+rnd*108}
+    \pgfmathsetmacro{\sb}{rnd}
+    \pgfmathsetmacro{\skip}{(\sy>128) || ((\sx>118) && (\sx<175) && (\sy>98) && (\sy<114)) ? 1 : 0}
+    \ifdim\skip pt<0.5pt
+      \pgfmathsetmacro{\sr}{0.12+\sb*\sb*0.55}
+      \pgfmathsetmacro{\so}{0.15+\sb*0.55}
+      \fill[navy,opacity=\so] ($(O)+(\sx,-\sy)$) circle (\sr);
+    \fi
+  }
+  % destellos
+  \foreach \x/\y/\k in {38/52/1.9,172/60/1.5,150/134/1.2,22/126/1.1}{
+    \draw[azul,line width=.18mm,opacity=.7] ($(O)+(\x-2*\k,-\y)$) -- ($(O)+(\x+2*\k,-\y)$);
+    \draw[azul,line width=.18mm,opacity=.7] ($(O)+(\x,-\y-2*\k)$) -- ($(O)+(\x,-\y+2*\k)$);
+    \fill[navy] ($(O)+(\x,-\y)$) circle (\k*0.32);
+  }
+
+  % órbitas
+  \coordinate (S) at ($(O)+(112,-96)$);
+  \begin{scope}[shift={(S)},rotate=14]
+    \foreach \R/\i in {9/0,15/1,22/2,30/3,40/4,52/5,66/6,82/7,100/8,120/9}{
+      \pgfmathsetmacro{\op}{0.85-\i*0.07}
+      \ifnum\i<4
+        \draw[azul,line width=.3mm*0.3,opacity=\op] (0,0) ellipse ({\R} and {\R*0.36});
+      \else
+        \draw[navy,line width=.22mm*0.3,opacity=\op] (0,0) ellipse ({\R} and {\R*0.36});
+      \fi
+    }
+    \foreach \R/\a/\k in {9/200/.9,15/40/1.1,30/300/1.4,40/140/1.0,52/250/2.0,66/70/1.7}
+      \fill[navy] ({\R*cos(\a)},{\R*0.36*sin(\a)}) circle (\k*0.55);
+    % la Tierra
+    \coordinate (T) at ({22*cos(-77.4)},{22*0.36*sin(-77.4)});
+    \fill[tierra] (T) circle (1.05);
+    \draw[tierra,line width=.25mm*0.3] (T) circle (2.4);
+    % el Sol
+    \fill[estrella,opacity=.18] (0,0) circle (4.2);
+    \fill[estrella] (0,0) circle (2.3);
+  \end{scope}
+  \node[gris,font=\scriptsize\itshape] at ($(S)+(-3,7.5)$) {Sol};
+  \draw[azul,line width=.22mm*0.3] ($(T)+(1.6,-1.6)$) -- ($(T)+(12,-12)$) -- ($(T)+(40,-12)$);
+  \node[anchor=south west,navy,font=\small\itshape,inner sep=1pt] at ($(T)+(13,-12)$) {tú estás aquí};
+
+  % línea temporal
+  \draw[cielo,line width=.3mm*0.3] ($(O)+(22,-151)$) -- ($(O)+(188,-151)$);
+  \foreach \x/\l/\a in {22/Big Bang/south west,60/primeras estrellas/south,150/el Sol/south,188/hoy/south east}{
+    \fill[navy] ($(O)+(\x,-151)$) circle (.7);
+    \node[anchor=\a,gris,font=\scriptsize\itshape,inner sep=1pt] at ($(O)+(\x,-149.6)$) {\l};
+  }
+  \fill[azul] ($(O)+(188,-151)$) circle (1.1);
+  \node[gris!80,font=\tiny] at ($(O)+(105,-155)$) {\textls[300]{13.800 MILLONES DE AÑOS}};
+
+  % título
+  \node[anchor=north west,inner sep=0] at ($(O)+(22,-166)$) {\small\color{azul}\vsc{Sección nueva \textbar{} Episodio I}};
+  \node[anchor=north west,inner sep=0] at ($(O)+(21,-173)$) {\fontsize{56}{56}\selectfont\bfseries\color{navy}Cosmosofía};
+  \node[anchor=north west,inner sep=0] at ($(O)+(22,-196)$) {\Large\itshape\color{navy}Un mar de cuatrocientos mil millones de soles};
+  \draw[azul,line width=1.2pt] ($(O)+(22,-210)$) -- ($(O)+(46,-210)$);
+  \node[anchor=north west,inner sep=0] at ($(O)+(22,-214)$)
+    {\color{gris}1 planeta \ {\color{cielo}·}\ $4\times10^{11}$ estrellas \ {\color{cielo}·}\ $2\times10^{12}$ galaxias \ {\color{cielo}·}\ \textit{tú}};
+
+  % metadatos
+  \draw[gris!70,line width=.4pt] ($(O)+(22,-240)$) -- ($(O)+(188,-240)$);
+  \node[anchor=north west,inner sep=0,align=left] at ($(O)+(22,-243)$)
+    {{\scriptsize\color{azul}\vsc{Documento}}\\[1mm]\textbf{\color{navy}Guion de radio}};
+  \node[anchor=north west,inner sep=0,align=left] at ($(O)+(78,-243)$)
+    {{\scriptsize\color{azul}\vsc{Confeccionado por}}\\[1mm]Daniel Martín Guerrero};
+  \node[anchor=north west,inner sep=0,align=left] at ($(O)+(140,-243)$)
+    {{\scriptsize\color{azul}\vsc{Voces}}\\[1mm]Locutor 1 (L1)\\Locutor 2 (L2)};
+  \node[anchor=north east,inner sep=0] at ($(O)+(188,-270)$) {\small\color{gris}\vsc{Salamanca, 2026}};
+
+  % barra inferior
+  \fill[cielo] ($(current page.south west)$) rectangle ++(29.4,4);
+  \fill[azul]  ($(current page.south west)+(29.4,0)$) rectangle ++(39.9,4);
+  \fill[navy] ($(current page.south west)+(69.3mm,0)$) rectangle ($(current page.south east)+(0,4mm)$);
+\end{tikzpicture}
+\null
+\newpage
+
+% ======================= RESUMEN E ÍNDICE ===========================
+\begin{center}
+  {\large\color{navy}\textbf{\textls[140]{COSMOSOFÍA · EPISODIO I}}}\\[2mm]
+  {\small\color{gris}Guion confeccionado por Daniel Martín Guerrero}
+\end{center}
+\vspace{4mm}
+
+\begin{list}{}{\leftmargin=10mm\rightmargin=10mm}\item\small
+{\color{navy}\textbf{\vsc{Resumen.}}} Cosmosofía es la nueva sección con la que se cierra Radioacción Cósmica. No se pregunta solo qué hay ahí arriba, sino qué significa para nosotros, aquí abajo. En este primer episodio hacemos cinco paradas: dónde estamos en el universo, de qué estamos hechos, por qué lo efímero es lo valioso, por qué la ciencia vive en la frontera del «¿por qué no?» y qué nos debemos unos a otros como habitantes de un mismo punto azul pálido. Nos acompañan, sobre todo, las voces de Brian Cox y Carl Sagan.
+\end{list}
+
+\vspace{5mm}
+\begin{center}\color{navy}\vsc{Índice y escaleta}\end{center}
+\vspace{1mm}
+
+\newcommand{\entrada}[4]{{\color{azul}#1}\hspace{3mm}{\color{navy}#2}\ {\itshape\color{gris}· #3}\ {\color{cielo}\dotfill}\ {\small\color{gris}#4}\par\vspace{1mm}}
+\begin{list}{}{\leftmargin=10mm\rightmargin=10mm}\item
+\entrada{0}{Presentación}{Abrir la ventana}{00:00}
+\entrada{1}{Coordenadas}{Dónde estamos}{00:27}
+\entrada{2}{Polvo de estrellas}{De qué estamos hechos}{02:12}
+\entrada{3}{La flecha del tiempo}{Por qué lo efímero es lo valioso}{03:36}
+\entrada{4}{¿Por qué no?}{La frontera}{05:13}
+\entrada{5}{Un punto azul pálido}{Lo que nos debemos}{06:44}
+\entrada{6}{Epílogo}{Mirar arriba}{07:40}
+\entrada{7}{Despedida}{Per aspera ad astra}{08:23}
+\hfill{\footnotesize\itshape\color{gris}Duración estimada de la locución: unos 9 minutos (sin música)}
+\end{list}
+
+\vspace{6mm}
+\begin{list}{}{\leftmargin=10mm\rightmargin=10mm}\item
+\begin{tcolorbox}[enhanced,colback=bruma,colframe=bruma,boxrule=0pt,arc=0pt,
+  borderline west={2pt}{0pt}{azul},left=5mm,right=5mm,top=3mm,bottom=3mm]
+\small
+{\color{azul}\textbf{\vsc{Notas de realización}}}\par\vspace{1mm}
+\begin{itemize}[leftmargin=4.5mm,label={\color{azul}\scriptsize$\star$},itemsep=.5mm,topsep=0pt]
+  \item Dos voces, \textbf{L1} y \textbf{L2}. Es la última sección del programa: entra después del bloque anterior, sin volver a presentar el programa.
+  \item Las indicaciones en {\color{gris}\vsc{versalitas grises}} son para técnico y locutores: no se leen.
+  \item Las cajas azules son citas que se leen en antena, con un pequeño silencio antes y después. Las de Brian Cox son traducciones adaptadas del inglés.
+  \item Tono pausado e íntimo, de conversación nocturna. Tiempo calculado a unas 150 palabras por minuto.
+  \item Música sugerida, de fondo y muy baja: algo ambiental en la línea de \textit{Cosmos} (Vangelis) o \textit{Interstellar} (Hans Zimmer).
+\end{itemize}
+\end{tcolorbox}
+\end{list}
+\newpage
+
+% ============================ GUION =================================
+\seccion{0}{Presentación}{Abrir la ventana}
+
+\cue{Cortinilla de la sección}
+\Lu{Y para cerrar el programa, hoy estrenamos sección. La hemos llamado \textit{Cosmosofía}.}
+\Ld{Del griego \textit{kósmos}, que significa orden y también belleza, y \textit{sophía}, sabiduría. La sabiduría que el cosmos nos devuelve cuando nos atrevemos a mirarlo de verdad.}
+\Lu{Durante el programa os hemos contado qué hay ahí arriba. Ahora queremos preguntarnos qué significa todo eso para nosotros, aquí abajo. Así que, si podéis, apagad alguna luz y acompañadnos.}
+\cue{Entra música ambiental, lenta · Se queda de fondo}
+
+\seccion{1}{Coordenadas}{Dónde estamos}
+
+\Lu{Empecemos por situarnos. Estáis sobre un planeta que viaja alrededor del Sol a más de 100.000 kilómetros por hora. Ahora mismo, mientras escucháis.}
+\Ld{Y ese Sol es una estrella entre cientos de miles de millones en la Vía Láctea, que a su vez es una galaxia entre, quizá, billones. Y uno piensa: entonces no somos nada.}
+\Lu{El físico británico Brian Cox lo resume así: estamos en un planeta, entre cuatrocientos mil millones de estrellas, entre dos billones de galaxias… y el universo podría ser infinito más allá de nuestro horizonte. Pero luego le da la vuelta a todo.}
+\eco{1.1}{Brian Cox}{«Sin embargo, creo que podríamos ser importantes. Puede que solo haya una civilización en la Vía Láctea. Y por eso, en ese mar de cuatrocientos mil millones de soles, podríamos ser mucho más importantes y valiosos de lo que solemos reconocernos.»}{Brian Cox · traducción adaptada}
+\Ld{La misma cifra que nos hacía sentir insignificantes es la que nos hace únicos. No hace falta ser grande para ser valioso. Basta con ser raro.}
+\Lu{En 1990, Carl Sagan consiguió que la sonda Voyager 1 se girase y fotografiase la Tierra desde unos seis mil millones de kilómetros. Salió un puntito azul pálido, más pequeño que un píxel.}
+\eco{1.2}{Carl Sagan}{«Mirad de nuevo ese punto. Eso es aquí. Eso es nuestro hogar. Eso somos nosotros. En él, todos los que amáis, todos los que conocéis, cada ser humano que ha existido, vivió su vida.»}{Carl Sagan, \textit{Un punto azul pálido} (1994)}
+\Ld{Y esa misma Voyager 1, hacia noviembre de este 2026, será el primer objeto humano en alcanzar un día-luz de distancia. Seguimos haciendo lo mismo: irnos lejos… para poder vernos.}
+
+\constelacion
+\seccion{2}{Polvo de estrellas}{De qué estamos hechos}
+
+\Lu{Ahora la pregunta es otra: ¿qué somos? El hidrógeno del agua de vuestro cuerpo nació poco después del Big Bang, hace unos 13.800 millones de años.}
+\Ld{Y el carbono, el calcio de los huesos o el hierro de la sangre se forjaron dentro de estrellas que murieron, algunas como supernovas. Sin supernovas no estaríamos aquí para hablar de ellas.}
+\Lu{Que las estrellas están hechas sobre todo de hidrógeno y helio lo descubrió en 1925 una joven astrónoma, Cecilia Payne. La convencieron de presentarlo como algo que, casi con seguridad, no podía ser real… y pocos años después le dieron la razón.}
+\Ld{Ella misma escribió una frase que deberíamos tener todos pegada en la mesa.}
+\eco{2.1}{Cecilia Payne}{«La recompensa del joven científico es la emoción de ser la primera persona en la historia del mundo en ver algo o en comprenderlo.»}{Cecilia Payne-Gaposchkin, \textit{autobiografía}}
+\Lu{Por eso la ciencia no es un muro de certezas, sino una conversación. Avanza cuando alguien se atreve a decir lo que nadie quiere oír, y los demás tienen la grandeza de escuchar.}
+\eco{2.2}{Carl Sagan}{«Somos una manera que tiene el cosmos de conocerse a sí mismo.»}{Carl Sagan, \textit{Cosmos} (1980)}
+\Ld{Átomos forjados en estrellas que se han organizado hasta formar un cerebro capaz de preguntarse de dónde vienen. Cox lo dice así: somos el cosmos hecho consciente.}
+
+\constelacion
+\seccion{3}{La flecha del tiempo}{Por qué lo efímero es lo valioso}
+
+\Ld{Vamos con una idea que parece triste: la segunda ley de la termodinámica. El desorden del universo siempre aumenta. El café se enfría, las estrellas se apagan.}
+\Lu{Es la flecha del tiempo: la razón por la que recordamos el pasado y no el futuro, y por la que un vaso roto nunca se recompone solo. Pero escuchad cómo lo ve Cox.}
+\eco{3.1}{Brian Cox}{«El universo tiende hacia un estado cada vez más desordenado. Y en ese proceso de ir del orden al desorden, la complejidad surge de forma natural durante un breve instante. Las estrellas, los planetas, la vida… existen porque el universo se está deshaciendo.»}{Brian Cox · traducción adaptada}
+\Ld{No existimos \textit{a pesar de} que el universo se desordena, sino \textit{porque} se desordena. Como los remolinos de un río, que solo existen porque el agua fluye.}
+\Lu{Por eso todo lo complejo es necesariamente finito. Lo que nunca se acaba no hace falta cuidarlo; lo raro y lo breve es lo que de verdad vale.}
+\Ld{Sagan lo explicaba con su Calendario Cósmico. Si comprimimos la historia del universo en un año, el Sol no aparece hasta finales de agosto, los dinosaurios llegan en Navidad y los primeros humanos, en los últimos minutos del 31 de diciembre. Toda nuestra historia escrita cabe en los últimos diez segundos de Nochevieja. Y en esos diez segundos hemos medido la edad del cosmos y hemos pisado la Luna.}
+\eco{3.2}{Carl Sagan}{«Para criaturas tan pequeñas como nosotros, la inmensidad solo es soportable a través del amor.»}{Carl Sagan, \textit{Contact} (1985)}
+
+\constelacion
+\seccion{4}{¿Por qué no?}{La frontera entre lo conocido y lo desconocido}
+
+\Lu{George Bernard Shaw decía: «Ves cosas y dices: ¿por qué? Pero yo sueño cosas que nunca existieron y digo: ¿por qué no?». Y la ciencia vive ahí, en el \textit{¿por qué no?}}
+\Ld{¿Por qué no van a estar hechas las estrellas de algo distinto de lo que todos creen? ¿Por qué no va a curvarse el espacio, como se atrevió a imaginar Einstein?}
+\eco{4.1}{Brian Cox}{«Para un científico, el lugar más bello en el que se puede estar es la frontera entre lo conocido y lo desconocido. Y queda tanto, tanto por explorar.»}{Brian Cox · traducción adaptada}
+\Lu{No dice que lo más bello sea tener todas las respuestas, sino estar en el borde. En la duda. Richard Feynman pensaba igual.}
+\eco{4.2}{Richard Feynman}{«Puedo vivir con la duda, con la incertidumbre y con no saber. Creo que es mucho más interesante vivir sin saber que tener respuestas que podrían estar equivocadas.»}{Richard Feynman, entrevista en la BBC (1981)}
+\Ld{Las universidades nacieron así, con la \textit{lectio} y la \textit{disputatio}: leer y después discutir con argumentos, no con burlas.}
+\Lu{Rousseau lo resumía muy bien: «Prefiero ser un hombre de paradojas que un hombre de prejuicios». La ciencia se equivoca, y no pasa nada: corregirse es su mayor virtud. Nadie es dueño de la verdad.}
+\Ld{Por eso esto se llama Cosmosofía. Aquí caben la física, la filosofía y las preguntas que aún no tienen respuesta. Como escribió Sagan, la ciencia es una profunda fuente de espiritualidad.}
+
+\constelacion
+\seccion{5}{Un punto azul pálido}{Lo que nos debemos unos a otros}
+
+\Ld{Vivimos un tiempo de bandos y de ruido, de ganar discusiones en vez de entendernos. Y desde aquel píxel de la Voyager, todo eso se ve de otra manera.}
+\eco{5.1}{Carl Sagan}{«Para mí, esto subraya nuestra responsabilidad de tratarnos mejor los unos a los otros, y de preservar y querer ese punto azul pálido, el único hogar que hemos conocido.»}{Carl Sagan, \textit{Un punto azul pálido} (1994)}
+\Lu{Muchos astronautas cuentan algo parecido. Lo llaman el «efecto perspectiva»: ven la Tierra desde fuera, sin fronteras dibujadas, con una atmósfera tan fina como una piel… y vuelven sintiendo que lo que nos separa es pequeñísimo al lado de lo que compartimos.}
+\Ld{Y si quizá somos la única civilización de la galaxia, no podemos permitirnos el desprecio. Somos demasiado escasos y valiosos para malgastarnos odiándonos.}
+\Lu{Escuchar al que piensa distinto no es darle la razón. Es reconocer que compartimos el mismo punto azul.}
+
+\constelacion
+\seccion{6}{Epílogo}{Mirar arriba}
+
+\Lu{Os dejamos una tarea. Esta noche, si está despejado, salid y mirad arriba cinco minutos. Sin móvil.}
+\Ld{Buscad la estrella más brillante y pensad que esa luz salió de allí hace años, a veces siglos: estáis mirando el pasado.}
+\Lu{Y si tenéis un cielo oscuro, buscad en la constelación de Andrómeda una manchita difusa: es otra galaxia, y su luz ha viajado dos millones y medio de años hasta vuestros ojos.}
+\Ld{Y pensad que estáis hechos de lo mismo que esas estrellas. No sabemos si el cosmos tiene un sentido, pero nosotros podemos dárselo: con lo que aprendemos, con lo que creamos y con cómo nos tratamos.}
+
+\seccion{7}{Despedida}{Per aspera ad astra}
+
+\Lu{Esto ha sido Cosmosofía. Gracias por mirar arriba con nosotros.}
+\Ld{Y recordad la vieja expresión latina: \textit{per aspera ad astra}. A través de las dificultades, hasta las estrellas.}
+\Lu{Porque el camino nunca es fácil… pero siempre merece la pena mirar hacia arriba.}
+\Ambos{¡\textit{Ad astra}!}
+\cue{Sube la música · Se funde lentamente}
+
+% =========================== FUENTES ================================
+\vspace{10mm}
+{\color{navy}\large\vsc{Fuentes y citas}}\par\vspace{3mm}
+\begin{enumerate}[leftmargin=7mm,itemsep=.6mm,label={\color{azul}\arabic*.}]\small
+  \item Cox, B. Fragmentos de sus intervenciones divulgativas (vídeos de referencia aportados). Traducción adaptada al castellano.
+  \item Sagan, C. \textit{Cosmos}. 1980.
+  \item Sagan, C. \textit{Un punto azul pálido}. 1994.
+  \item Sagan, C. \textit{Contact}. 1985; y \textit{El mundo y sus demonios}. 1995.
+  \item Payne, C. \textit{Stellar Atmospheres}. Tesis doctoral, Harvard, 1925.
+  \item Shaw, G. B. \textit{Back to Methuselah}. 1921. Rousseau, J.-J. \textit{Emilio}. 1762.
+  \item NASA / JPL. Misión Voyager: el «punto azul pálido» (1990) y la distancia de Voyager 1.
+  \item Martín Guerrero, D. Ensayos propios sobre ciencia, debate y crispación.
+\end{enumerate}
+
+\vfill
+\begin{center}
+\begin{tikzpicture}[x=1mm,y=1mm]
+  \foreach \a/\b in {26/7,17/4.6,9/2.4} \draw[cielo,line width=.3pt] (0,0) ellipse (\a*.8 and \b*.8);
+  \fill[estrella] (0,0) circle (1.1);
+  \fill[azul] (13.1,-1.5) circle (.7);
+\end{tikzpicture}\\[3mm]
+{\small\color{gris}Guion confeccionado por}\\[1mm]
+{\color{navy}\textbf{\vsc{Daniel Martín Guerrero}}}\\[1mm]
+{\small\color{gris}Asociación Astronómica Supernova · Salamanca, 2026}
+\end{center}
+
+\end{document}

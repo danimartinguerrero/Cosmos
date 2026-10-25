@@ -17,7 +17,6 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{calc}
-\usepackage[most]{tcolorbox}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
@@ -70,23 +69,8 @@
   \par\vspace{1.5mm}\noindent\hangindent=13mm\hangafter=1
   \makebox[13mm][l]{\color{azul}\scriptsize\bfseries L1 y L2}#1\par}
 
-% ---------- Indicaciones técnicas (no se leen) ----------
-\newcommand{\cue}[1]{%
-  \par\vspace{2.5mm}\noindent\hspace*{13mm}{\color{cielo}\rule[.6ex]{6mm}{.5pt}}\hspace{2.5mm}%
-  {\small\color{gris}\vsc{#1}}\par\vspace{2mm}}
-
-% ---------- Citas ("ecos") ----------
-% \eco{número}{autor}{cita}{fuente}
-\newtcolorbox{ecobox}{enhanced,breakable=false,colback=bruma,colframe=bruma,
-  boxrule=0pt,arc=0pt,left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,
-  borderline west={2pt}{0pt}{azul},enlarge left by=13mm,width=\linewidth-13mm,
-  before skip=3mm,after skip=3mm}
-\newcommand{\eco}[4]{%
-  \begin{ecobox}
-    {\small\color{azul}\textbf{Eco #1}}\ {\small\color{gris}(#2)}\\[0.8mm]
-    {\itshape\color{navy}#3}\par\vspace{1mm}
-    \hfill{\footnotesize\color{gris}#4}
-  \end{ecobox}}
+% ---------- Citas dentro del diálogo ----------
+\newcommand{\cita}[1]{{\itshape\color{navy}#1}}
 
 % ---------- Separador en forma de constelación ----------
 \newcommand{\constelacion}{%
@@ -202,57 +186,42 @@
 \end{list}
 
 \vspace{5mm}
-\begin{center}\color{navy}\vsc{Índice y escaleta}\end{center}
+\begin{center}\color{navy}\vsc{Índice}\end{center}
 \vspace{1mm}
 
-\newcommand{\entrada}[4]{{\color{azul}#1}\hspace{3mm}{\color{navy}#2}\ {\itshape\color{gris}· #3}\ {\color{cielo}\dotfill}\ {\small\color{gris}#4}\par\vspace{1mm}}
+\newcommand{\entrada}[3]{{\color{azul}#1}\hspace{3mm}{\color{navy}#2}\ {\itshape\color{gris}· #3}\par\vspace{1.2mm}}
 \begin{list}{}{\leftmargin=10mm\rightmargin=10mm}\item
-\entrada{0}{Presentación}{Abrir la ventana}{00:00}
-\entrada{1}{Coordenadas}{Dónde estamos}{00:27}
-\entrada{2}{Polvo de estrellas}{De qué estamos hechos}{02:12}
-\entrada{3}{La flecha del tiempo}{Por qué lo efímero es lo valioso}{03:36}
-\entrada{4}{¿Por qué no?}{La frontera}{05:13}
-\entrada{5}{Un punto azul pálido}{Lo que nos debemos}{06:44}
-\entrada{6}{Epílogo}{Mirar arriba}{07:40}
-\entrada{7}{Despedida}{Per aspera ad astra}{08:23}
-\hfill{\footnotesize\itshape\color{gris}Duración estimada de la locución: unos 9 minutos (sin música)}
-\end{list}
-
-\vspace{6mm}
-\begin{list}{}{\leftmargin=10mm\rightmargin=10mm}\item
-\begin{tcolorbox}[enhanced,colback=bruma,colframe=bruma,boxrule=0pt,arc=0pt,
-  borderline west={2pt}{0pt}{azul},left=5mm,right=5mm,top=3mm,bottom=3mm]
-\small
-{\color{azul}\textbf{\vsc{Notas de realización}}}\par\vspace{1mm}
-\begin{itemize}[leftmargin=4.5mm,label={\color{azul}\scriptsize$\star$},itemsep=.5mm,topsep=0pt]
-  \item Dos voces, \textbf{L1} y \textbf{L2}. Es la última sección del programa: entra después del bloque anterior, sin volver a presentar el programa.
-  \item Las indicaciones en {\color{gris}\vsc{versalitas grises}} son para técnico y locutores: no se leen.
-  \item Las cajas azules son citas que se leen en antena, con un pequeño silencio antes y después. Las de Brian Cox son traducciones adaptadas del inglés.
-  \item Tono pausado e íntimo, de conversación nocturna. Tiempo calculado a unas 150 palabras por minuto.
-  \item Música sugerida, de fondo y muy baja: algo ambiental en la línea de \textit{Cosmos} (Vangelis) o \textit{Interstellar} (Hans Zimmer).
-\end{itemize}
-\end{tcolorbox}
+\entrada{0}{Presentación}{Abrir la ventana}
+\entrada{1}{Coordenadas}{Dónde estamos}
+\entrada{2}{Polvo de estrellas}{De qué estamos hechos}
+\entrada{3}{La flecha del tiempo}{Por qué lo efímero es lo valioso}
+\entrada{4}{¿Por qué no?}{La frontera entre lo conocido y lo desconocido}
+\entrada{5}{Un punto azul pálido}{Lo que nos debemos unos a otros}
+\entrada{6}{Epílogo}{Mirar arriba}
+\entrada{7}{Despedida}{Per aspera ad astra}
+\vspace{2mm}
+{\color{cielo}\rule{\linewidth}{.4pt}}\par\vspace{1mm}
+\hfill{\small\itshape\color{gris}Duración estimada: unos 9 minutos}
 \end{list}
 \newpage
 
 % ============================ GUION =================================
+% Las citas van en cursiva dentro del propio diálogo: \cita{...}
 \seccion{0}{Presentación}{Abrir la ventana}
 
-\cue{Cortinilla de la sección}
 \Lu{Y para cerrar el programa, hoy estrenamos sección. La hemos llamado \textit{Cosmosofía}.}
 \Ld{Del griego \textit{kósmos}, que significa orden y también belleza, y \textit{sophía}, sabiduría. La sabiduría que el cosmos nos devuelve cuando nos atrevemos a mirarlo de verdad.}
 \Lu{Durante el programa os hemos contado qué hay ahí arriba. Ahora queremos preguntarnos qué significa todo eso para nosotros, aquí abajo. Así que, si podéis, apagad alguna luz y acompañadnos.}
-\cue{Entra música ambiental, lenta · Se queda de fondo}
 
 \seccion{1}{Coordenadas}{Dónde estamos}
 
 \Lu{Empecemos por situarnos. Estáis sobre un planeta que viaja alrededor del Sol a más de 100.000 kilómetros por hora. Ahora mismo, mientras escucháis.}
 \Ld{Y ese Sol es una estrella entre cientos de miles de millones en la Vía Láctea, que a su vez es una galaxia entre, quizá, billones. Y uno piensa: entonces no somos nada.}
-\Lu{El físico británico Brian Cox lo resume así: estamos en un planeta, entre cuatrocientos mil millones de estrellas, entre dos billones de galaxias… y el universo podría ser infinito más allá de nuestro horizonte. Pero luego le da la vuelta a todo.}
-\eco{1.1}{Brian Cox}{«Sin embargo, creo que podríamos ser importantes. Puede que solo haya una civilización en la Vía Láctea. Y por eso, en ese mar de cuatrocientos mil millones de soles, podríamos ser mucho más importantes y valiosos de lo que solemos reconocernos.»}{Brian Cox · traducción adaptada}
-\Ld{La misma cifra que nos hacía sentir insignificantes es la que nos hace únicos. No hace falta ser grande para ser valioso. Basta con ser raro.}
-\Lu{En 1990, Carl Sagan consiguió que la sonda Voyager 1 se girase y fotografiase la Tierra desde unos seis mil millones de kilómetros. Salió un puntito azul pálido, más pequeño que un píxel.}
-\eco{1.2}{Carl Sagan}{«Mirad de nuevo ese punto. Eso es aquí. Eso es nuestro hogar. Eso somos nosotros. En él, todos los que amáis, todos los que conocéis, cada ser humano que ha existido, vivió su vida.»}{Carl Sagan, \textit{Un punto azul pálido} (1994)}
+\Lu{El físico británico Brian Cox lo resume así: estamos en un planeta, entre cuatrocientos mil millones de estrellas, entre dos billones de galaxias… y el universo podría ser infinito más allá de nuestro horizonte.}
+\Ld{Pero luego le da la vuelta a todo. Dice: \cita{«Sin embargo, creo que podríamos ser importantes. Puede que solo haya una civilización en la Vía Láctea»}. Y por eso, en ese mar de cuatrocientos mil millones de soles, \cita{«podríamos ser mucho más importantes y valiosos de lo que solemos reconocernos»}.}
+\Lu{Qué giro. La misma cifra que nos hacía sentir insignificantes es la que nos hace únicos. No hace falta ser grande para ser valioso. Basta con ser raro.}
+\Ld{En 1990, Carl Sagan consiguió que la sonda Voyager 1 se girase y fotografiase la Tierra desde unos seis mil millones de kilómetros. Salió un puntito azul pálido, más pequeño que un píxel.}
+\Lu{Y Sagan escribió sobre esa foto unas palabras que todavía emocionan: \cita{«Mirad de nuevo ese punto. Eso es aquí. Eso es nuestro hogar. Eso somos nosotros. En él, todos los que amáis, todos los que conocéis, cada ser humano que ha existido, vivió su vida»}.}
 \Ld{Y esa misma Voyager 1, hacia noviembre de este 2026, será el primer objeto humano en alcanzar un día-luz de distancia. Seguimos haciendo lo mismo: irnos lejos… para poder vernos.}
 
 \constelacion
@@ -261,43 +230,41 @@
 \Lu{Ahora la pregunta es otra: ¿qué somos? El hidrógeno del agua de vuestro cuerpo nació poco después del Big Bang, hace unos 13.800 millones de años.}
 \Ld{Y el carbono, el calcio de los huesos o el hierro de la sangre se forjaron dentro de estrellas que murieron, algunas como supernovas. Sin supernovas no estaríamos aquí para hablar de ellas.}
 \Lu{Que las estrellas están hechas sobre todo de hidrógeno y helio lo descubrió en 1925 una joven astrónoma, Cecilia Payne. La convencieron de presentarlo como algo que, casi con seguridad, no podía ser real… y pocos años después le dieron la razón.}
-\Ld{Ella misma escribió una frase que deberíamos tener todos pegada en la mesa.}
-\eco{2.1}{Cecilia Payne}{«La recompensa del joven científico es la emoción de ser la primera persona en la historia del mundo en ver algo o en comprenderlo.»}{Cecilia Payne-Gaposchkin, \textit{autobiografía}}
+\Ld{Y ella misma lo contaba con una ilusión preciosa. Decía que la recompensa de un joven científico es \cita{«la emoción de ser la primera persona en la historia del mundo en ver algo o en comprenderlo»}.}
 \Lu{Por eso la ciencia no es un muro de certezas, sino una conversación. Avanza cuando alguien se atreve a decir lo que nadie quiere oír, y los demás tienen la grandeza de escuchar.}
-\eco{2.2}{Carl Sagan}{«Somos una manera que tiene el cosmos de conocerse a sí mismo.»}{Carl Sagan, \textit{Cosmos} (1980)}
-\Ld{Átomos forjados en estrellas que se han organizado hasta formar un cerebro capaz de preguntarse de dónde vienen. Cox lo dice así: somos el cosmos hecho consciente.}
+\Ld{Sagan lo dijo en una sola frase: \cita{«somos una manera que tiene el cosmos de conocerse a sí mismo»}. Átomos forjados en estrellas que se han organizado hasta formar un cerebro capaz de preguntarse de dónde vienen.}
+\Lu{Y Brian Cox lo dice a su manera: somos el cosmos hecho consciente.}
 
 \constelacion
 \seccion{3}{La flecha del tiempo}{Por qué lo efímero es lo valioso}
 
 \Ld{Vamos con una idea que parece triste: la segunda ley de la termodinámica. El desorden del universo siempre aumenta. El café se enfría, las estrellas se apagan.}
-\Lu{Es la flecha del tiempo: la razón por la que recordamos el pasado y no el futuro, y por la que un vaso roto nunca se recompone solo. Pero escuchad cómo lo ve Cox.}
-\eco{3.1}{Brian Cox}{«El universo tiende hacia un estado cada vez más desordenado. Y en ese proceso de ir del orden al desorden, la complejidad surge de forma natural durante un breve instante. Las estrellas, los planetas, la vida… existen porque el universo se está deshaciendo.»}{Brian Cox · traducción adaptada}
-\Ld{No existimos \textit{a pesar de} que el universo se desordena, sino \textit{porque} se desordena. Como los remolinos de un río, que solo existen porque el agua fluye.}
-\Lu{Por eso todo lo complejo es necesariamente finito. Lo que nunca se acaba no hace falta cuidarlo; lo raro y lo breve es lo que de verdad vale.}
-\Ld{Sagan lo explicaba con su Calendario Cósmico. Si comprimimos la historia del universo en un año, el Sol no aparece hasta finales de agosto, los dinosaurios llegan en Navidad y los primeros humanos, en los últimos minutos del 31 de diciembre. Toda nuestra historia escrita cabe en los últimos diez segundos de Nochevieja. Y en esos diez segundos hemos medido la edad del cosmos y hemos pisado la Luna.}
-\eco{3.2}{Carl Sagan}{«Para criaturas tan pequeñas como nosotros, la inmensidad solo es soportable a través del amor.»}{Carl Sagan, \textit{Contact} (1985)}
+\Lu{Es la flecha del tiempo: la razón por la que recordamos el pasado y no el futuro, y por la que un vaso roto nunca se recompone solo.}
+\Ld{Pero Cox lo mira desde otro lado. Explica que, mientras el universo va del orden al desorden, \cita{«la complejidad surge de forma natural durante un breve instante»}. Las estrellas, los planetas, la vida… \cita{«existen porque el universo se está deshaciendo»}.}
+\Lu{O sea, que no existimos \textit{a pesar de} que el universo se desordena, sino \textit{porque} se desordena. Como los remolinos de un río, que solo existen porque el agua fluye.}
+\Ld{Y por eso todo lo complejo es necesariamente finito. Lo que nunca se acaba no hace falta cuidarlo; lo raro y lo breve es lo que de verdad vale.}
+\Lu{Sagan lo explicaba con su Calendario Cósmico. Si comprimimos la historia del universo en un año, el Sol no aparece hasta finales de agosto, los dinosaurios llegan en Navidad y los primeros humanos, en los últimos minutos del 31 de diciembre. Toda nuestra historia escrita cabe en los últimos diez segundos de Nochevieja.}
+\Ld{Y en esos diez segundos hemos medido la edad del cosmos y hemos pisado la Luna. Ante tanta inmensidad, me quedo con lo que escribió Sagan en \textit{Contact}: \cita{«para criaturas tan pequeñas como nosotros, la inmensidad solo es soportable a través del amor»}.}
 
 \constelacion
 \seccion{4}{¿Por qué no?}{La frontera entre lo conocido y lo desconocido}
 
-\Lu{George Bernard Shaw decía: «Ves cosas y dices: ¿por qué? Pero yo sueño cosas que nunca existieron y digo: ¿por qué no?». Y la ciencia vive ahí, en el \textit{¿por qué no?}}
+\Lu{George Bernard Shaw decía: \cita{«Ves cosas y dices: ¿por qué? Pero yo sueño cosas que nunca existieron y digo: ¿por qué no?»}. Y la ciencia vive ahí, en el \textit{¿por qué no?}}
 \Ld{¿Por qué no van a estar hechas las estrellas de algo distinto de lo que todos creen? ¿Por qué no va a curvarse el espacio, como se atrevió a imaginar Einstein?}
-\eco{4.1}{Brian Cox}{«Para un científico, el lugar más bello en el que se puede estar es la frontera entre lo conocido y lo desconocido. Y queda tanto, tanto por explorar.»}{Brian Cox · traducción adaptada}
-\Lu{No dice que lo más bello sea tener todas las respuestas, sino estar en el borde. En la duda. Richard Feynman pensaba igual.}
-\eco{4.2}{Richard Feynman}{«Puedo vivir con la duda, con la incertidumbre y con no saber. Creo que es mucho más interesante vivir sin saber que tener respuestas que podrían estar equivocadas.»}{Richard Feynman, entrevista en la BBC (1981)}
-\Ld{Las universidades nacieron así, con la \textit{lectio} y la \textit{disputatio}: leer y después discutir con argumentos, no con burlas.}
-\Lu{Rousseau lo resumía muy bien: «Prefiero ser un hombre de paradojas que un hombre de prejuicios». La ciencia se equivoca, y no pasa nada: corregirse es su mayor virtud. Nadie es dueño de la verdad.}
-\Ld{Por eso esto se llama Cosmosofía. Aquí caben la física, la filosofía y las preguntas que aún no tienen respuesta. Como escribió Sagan, la ciencia es una profunda fuente de espiritualidad.}
+\Lu{Brian Cox dice que, para un científico, \cita{«el lugar más bello en el que se puede estar es la frontera entre lo conocido y lo desconocido»}. Y que queda tanto, tanto por explorar.}
+\Ld{Fíjate que no dice que lo más bello sea tener todas las respuestas, sino estar en el borde. En la duda. Feynman pensaba igual: \cita{«Puedo vivir con la duda y con no saber. Creo que es mucho más interesante vivir sin saber que tener respuestas que podrían estar equivocadas»}.}
+\Lu{Las universidades nacieron así, con la \textit{lectio} y la \textit{disputatio}: leer y después discutir con argumentos, no con burlas.}
+\Ld{Rousseau lo resumía muy bien: \cita{«Prefiero ser un hombre de paradojas que un hombre de prejuicios»}. La ciencia se equivoca, y no pasa nada: corregirse es su mayor virtud. Nadie es dueño de la verdad.}
+\Lu{Por eso esto se llama Cosmosofía. Aquí caben la física, la filosofía y las preguntas que aún no tienen respuesta. Como escribió Sagan, la ciencia es una profunda fuente de espiritualidad.}
 
 \constelacion
 \seccion{5}{Un punto azul pálido}{Lo que nos debemos unos a otros}
 
 \Ld{Vivimos un tiempo de bandos y de ruido, de ganar discusiones en vez de entendernos. Y desde aquel píxel de la Voyager, todo eso se ve de otra manera.}
-\eco{5.1}{Carl Sagan}{«Para mí, esto subraya nuestra responsabilidad de tratarnos mejor los unos a los otros, y de preservar y querer ese punto azul pálido, el único hogar que hemos conocido.»}{Carl Sagan, \textit{Un punto azul pálido} (1994)}
-\Lu{Muchos astronautas cuentan algo parecido. Lo llaman el «efecto perspectiva»: ven la Tierra desde fuera, sin fronteras dibujadas, con una atmósfera tan fina como una piel… y vuelven sintiendo que lo que nos separa es pequeñísimo al lado de lo que compartimos.}
-\Ld{Y si quizá somos la única civilización de la galaxia, no podemos permitirnos el desprecio. Somos demasiado escasos y valiosos para malgastarnos odiándonos.}
-\Lu{Escuchar al que piensa distinto no es darle la razón. Es reconocer que compartimos el mismo punto azul.}
+\Lu{Sagan decía que esa foto \cita{«subraya nuestra responsabilidad de tratarnos mejor los unos a los otros, y de preservar y querer ese punto azul pálido, el único hogar que hemos conocido»}.}
+\Ld{Muchos astronautas cuentan algo parecido. Lo llaman el «efecto perspectiva»: ven la Tierra desde fuera, sin fronteras dibujadas, con una atmósfera tan fina como una piel… y vuelven sintiendo que lo que nos separa es pequeñísimo al lado de lo que compartimos.}
+\Lu{Y si quizá somos la única civilización de la galaxia, no podemos permitirnos el desprecio. Somos demasiado escasos y valiosos para malgastarnos odiándonos.}
+\Ld{Escuchar al que piensa distinto no es darle la razón. Es reconocer que compartimos el mismo punto azul.}
 
 \constelacion
 \seccion{6}{Epílogo}{Mirar arriba}
@@ -313,7 +280,6 @@
 \Ld{Y recordad la vieja expresión latina: \textit{per aspera ad astra}. A través de las dificultades, hasta las estrellas.}
 \Lu{Porque el camino nunca es fácil… pero siempre merece la pena mirar hacia arriba.}
 \Ambos{¡\textit{Ad astra}!}
-\cue{Sube la música · Se funde lentamente}
 
 % =========================== FUENTES ================================
 \vspace{10mm}

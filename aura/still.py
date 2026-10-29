@@ -4,7 +4,7 @@ import numpy as np, cv2
 from .core import GRADES, finish
 
 def get_scene(name):
-    for mod in ('scenes_sky', 'scenes_physics', 'scenes_thermo'):
+    for mod in ('scenes_sky', 'scenes_physics', 'scenes_thermo', 'scenes_math'):
         try:
             m = importlib.import_module('aura.' + mod)
         except ModuleNotFoundError:

@@ -63,6 +63,109 @@ class Edit:
     title: str = ''
     out_dir: str = 'renders'
     tail: float = 2.5             # segundos extra al final (fundido a negro)
+    formulas: list = field(default_factory=list)   # fórmulas tipográficas (Fx), compuestas en el fotograma
+    fade_in: float = 0.8
+
+
+@dataclass
+class Fx:
+    """Fórmula matemática (sintaxis mathtext/LaTeX) animada sobre el fotograma."""
+    t0: float
+    t1: float
+    tex: str
+    pos: tuple = (540, 960)
+    size: int = 64
+    anim: str = 'pop'             # pop | slam | blur | wipe | glitch | rise
+    color: str = '#ffffff'
+    glow: str = '#7fd8ff'
+    gain: float = 1.25
+
+
+_TEX_CACHE = {}
+
+
+def tex_alpha(tex, size):
+    """Renderiza una fórmula a una máscara alfa float32 (Computer Modern)."""
+    key = (tex, size)
+    if key not in _TEX_CACHE:
+        import io
+        import matplotlib
+        matplotlib.use('Agg')
+        from matplotlib import mathtext, rcParams
+        from matplotlib.font_manager import FontProperties
+        rcParams['mathtext.fontset'] = 'cm'
+        buf = io.BytesIO()
+        mathtext.math_to_image(tex, buf, prop=FontProperties(size=size), dpi=100, format='png', color='black')
+        buf.seek(0)
+        im = cv2.imdecode(np.frombuffer(buf.read(), np.uint8), cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.0
+        if im.ndim == 3 and im.shape[2] == 4:
+            a = (1.0 - im[..., :3].mean(2)) * im[..., 3]
+        else:
+            a = 1.0 - (im.mean(2) if im.ndim == 3 else im)
+        a = np.pad(a, 24)
+        _TEX_CACHE[key] = a
+    return _TEX_CACHE[key]
+
+
+def composite_fx(img, fx, T):
+    from .core import hexcol
+    a = tex_alpha(fx.tex, fx.size)
+    if a.shape[1] > 1010:
+        k = 1010 / a.shape[1]
+        a = cv2.resize(a, (1010, max(int(a.shape[0] * k), 1)), interpolation=cv2.INTER_AREA)
+    dur = fx.t1 - fx.t0
+    pin = min(max((T - fx.t0) / 0.28, 0.0), 1.0)
+    pout = min(max((fx.t1 - T) / 0.22, 0.0), 1.0)
+    e_in = 1 - (1 - pin) ** 3
+    alpha = e_in * pout
+    if alpha <= 0.002:
+        return img
+    scale = 1.0 + 0.035 * (T - fx.t0) / max(dur, 1e-3) + 0.06 * (1 - pout)
+    dx = dy = 0.0
+    sig = 0.0
+    split = 0.0
+    if fx.anim == 'pop':
+        scale *= 1 + 0.25 * (1 - e_in)
+    elif fx.anim == 'slam':
+        pin2 = min(max((T - fx.t0) / 0.14, 0.0), 1.0)
+        scale *= 1 + 1.2 * (1 - pin2) ** 2
+        alpha = min(pin2 * 1.5, 1.0) * pout
+    elif fx.anim == 'blur':
+        sig = 14 * (1 - e_in)
+    elif fx.anim == 'rise':
+        dy = 70 * (1 - e_in)
+    elif fx.anim == 'glitch':
+        split = 22 * (1 - e_in) + (6 if (int(T * 30) % 11 == 0 and pin >= 1) else 0)
+    m = a
+    if abs(scale - 1) > 1e-3:
+        m = cv2.resize(a, (max(int(a.shape[1] * scale), 1), max(int(a.shape[0] * scale), 1)), interpolation=cv2.INTER_LINEAR)
+    if fx.anim == 'wipe':
+        k = int(m.shape[1] * e_in)
+        m = m.copy(); m[:, k:] = 0
+    if sig > 0.3:
+        m = cv2.GaussianBlur(m, (0, 0), sig)
+    h, w = m.shape
+    x0 = int(fx.pos[0] - w / 2 + dx); y0 = int(fx.pos[1] - h / 2 + dy)
+    xa, ya = max(x0, 0), max(y0, 0)
+    xb, yb = min(x0 + w, W), min(y0 + h, H)
+    if xa >= xb or ya >= yb:
+        return img
+    mm = m[ya - y0:yb - y0, xa - x0:xb - x0] * alpha
+    glow = cv2.GaussianBlur(mm, (0, 0), 7) * 0.55 + cv2.GaussianBlur(mm, (0, 0), 26) * 0.45
+    col = hexcol(fx.color, fx.gain); gcol = hexcol(fx.glow, 1.0)
+    reg = img[ya:yb, xa:xb]
+    shade = cv2.GaussianBlur(mm, (0, 0), 14)
+    reg *= (1 - 0.9 * np.clip(mm * 1.5 + shade * 1.6, 0, 1))[..., None]
+    reg += glow[..., None] * gcol * 0.35
+    if split > 0.5:
+        sp = int(split)
+        reg[..., 0] += np.roll(mm, sp, axis=1) * col[0]
+        reg[..., 1] += mm * col[1]
+        reg[..., 2] += np.roll(mm, -sp, axis=1) * col[2]
+    else:
+        reg += mm[..., None] * col
+    img[ya:yb, xa:xb] = reg
+    return img
 
 
 # ───────────────────────────── estilos tipográficos ─────────────────────────────
@@ -296,8 +399,15 @@ class Renderer:
             sx = e.shake * (math.sin(T * 13.1) + 0.5 * math.sin(T * 29.7))
             sy = e.shake * (math.cos(T * 11.3) + 0.5 * math.sin(T * 23.9))
             img = zoom_img(img, 1.02, dx=sx, dy=sy)
+        # fórmulas
+        if e.formulas:
+            img = np.ascontiguousarray(img, dtype=np.float32)
+            for fx in e.formulas:
+                t0, t1 = fx.t0 * k, fx.t1 * k
+                if t0 <= T <= t1:
+                    img = composite_fx(img, Fx(t0, t1, fx.tex, fx.pos, fx.size, fx.anim, fx.color, fx.glow, fx.gain), T)
         # fundido de entrada y salida
-        fin = min(T / 0.8, 1.0)
+        fin = min(T / max(e.fade_in, 1e-3), 1.0)
         fout = min(max((total + e.tail - T) / 2.0, 0.0), 1.0)
         if T > total:
             fout *= max(1 - (T - total) / e.tail, 0)

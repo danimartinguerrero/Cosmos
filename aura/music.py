@@ -415,6 +415,14 @@ def pulse(dur, bpm=100, key='D', seed=0, hits=(), build_at=None):
     return normalize(full), dict(bpm=bpm, beats=beats, bars=np.arange(0, dur, bar), beat=beat, hits=np.array(hits))
 
 
+def silence(dur, bpm=150, hit_every=8, seed=0):
+    """Sin música: pista muda que sólo aporta la rejilla de pulsos para el montaje."""
+    beat = 60.0 / bpm
+    beats = np.arange(0, dur, beat)
+    return np.zeros((int(dur * SR), 2), np.float32), dict(bpm=bpm, beats=beats, bars=beats[::4], beat=beat,
+                                                          hits=beats[::hit_every], drop=0.0)
+
+
 def write_wav(path, x):
     from scipy.io import wavfile
     wavfile.write(path, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))

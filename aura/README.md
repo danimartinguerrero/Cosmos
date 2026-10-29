@@ -8,7 +8,7 @@ de autor: todo lo que ves y oyes sale de este código.
 ## Uso rápido
 
 ```bash
-pip install numba scipy opencv-python-headless fonttools
+pip install numba scipy opencv-python-headless fonttools matplotlib
 ```
 
 ```bash
@@ -48,9 +48,18 @@ Edit(name='mi_edit', grade='aura', beats=True,                 # duraciones en p
 | Cielo | `scenes_sky.py` | `MilkyWay`, `Nebula` (paletas cliffs/pillars/teal/violet), `SpiralGalaxy`, `AuroraSky`, `EarthOrbit` |
 | Física | `scenes_physics.py` | `SpaceJellyfish`, `CosmicShower`, `Cherenkov`, `NeutrinoEarth`, `Pulsar`, `BlackHole`, `JWSTMirror`, `DeepField`, `CMBMap`, `Minkowski`, `SpacetimeWell`, `HeatDeath` |
 | Termo | `scenes_thermo.py` | `GasParticles` (Maxwell–Boltzmann, pistón), `InkEntropy`, `HeatDiffusion`, `PVCycle` (carnot/otto/brayton), `IdealGasSurface` |
+| Matemáticas | `scenes_math.py` | `FTC`, `GradientPaths`, `FieldFlow` (curl/source/saddle/dipole/swirl + rueda de paletas, caja de flujo, bucle), `GreenTiling` (cancelación interior), `Parametrization` (D → M: dome/sphere/torus/saddle/wave/mobius), `Charts` (atlas), `StokesNet`, `GaussSphere`, `OneForm`, `Wedge`, `BoundaryCube` (∂∂M = ∅), `Pullback`, `EllipseArea`, `FormulaVoid` |
 | Música | `music.py` | `ambient`, `phonk`, `pulse` + instrumentos (pads, 808, cencerro, braam, risers…) |
 | Montaje | `edit.py` | línea de tiempo, transiciones, estilos tipográficos, codificación ffmpeg |
-| Edits | `edits_cosmos.py`, `edits_termo.py` | los edits ya diseñados, listos para copiar y variar |
+| Edits | `edits_cosmos.py`, `edits_termo.py`, `edits_math.py` | los edits ya diseñados, listos para copiar y variar |
+
+## Fórmulas (LaTeX)
+
+`Fx(t0, t1, r'$\int_M d\omega=\int_{\partial M}\omega$', pos=(540, 300), size=90, anim='slam')`
+se compone tipográficamente con mathtext (Computer Modern) dentro del fotograma, con halo
+y sombra. Animaciones: `pop`, `slam`, `blur`, `wipe`, `glitch`, `rise`. Las fórmulas más
+anchas que la pantalla se reducen solas. Para edits sin música usa
+`music=('silence', dict(bpm=150))`: pista muda que solo marca el pulso de los cortes.
 
 ## Estilos de texto
 

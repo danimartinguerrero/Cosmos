@@ -7,7 +7,7 @@ import importlib
 
 from .edit import Renderer
 
-MODULES = ('aura.edits_cosmos', 'aura.edits_termo')
+MODULES = ('aura.edits_cosmos', 'aura.edits_termo', 'aura.edits_math')
 
 
 def catalog():
